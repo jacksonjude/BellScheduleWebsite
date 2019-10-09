@@ -63,7 +63,7 @@ async function reloadTodayScheduleData()
       currentPeriodNumber = i
       break
     }
-    else if (lastEndHour <= nowHour && lastEndMinute <= nowMinute)
+    else if (lastEndHour <= nowHour && lastEndMinute <= nowMinute && startHour >= nowHour && startMinute > nowMinute)
     {
       isPassingPeriod = true
       currentPeriodNumber = i
@@ -87,7 +87,7 @@ async function reloadTodayScheduleData()
   }
   else if (isPassingPeriod)
   {
-    $("#blockNumber").text("Passing period\nBlock " + periodNumbers[currentPeriodNumber] + " starts at " + periodTimes[currentPeriodNumber])
+    $("#blockNumber").text("Passing period\nBlock " + periodNumbers[currentPeriodNumber] + " starts at " + periodTimes[currentPeriodNumber].split("-")[0])
 
     schoolStarted = true
     schoolEnded = false
