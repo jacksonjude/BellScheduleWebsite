@@ -81,10 +81,10 @@ async function reloadTodayScheduleData()
   {
     $("#blockNumber").text("The current period is " + periodNumbers[currentPeriodNumber])
     
-    var periodEndTime = periodTimes[currentPeriodNumber].split("-")[0]
+    var periodEndTime = periodTimes[currentPeriodNumber].split("-")[1]
     var periodEndHour = parseInt(periodEndTime.split(":")[0])
     var periodEndMinute = parseInt(periodEndTime.split(":")[1])
-    $("#blockTime").text(periodTimes[currentPeriodNumber] + " (" + ((periodEndHour-nowHour)*60+(periodEndMinute-nowMinute)) + " mins left")
+    $("#blockTime").text(periodTimes[currentPeriodNumber] + " (" + ((periodEndHour-nowHour)*60+(periodEndMinute-nowMinute)) + " mins left)")
 
     schoolStarted = true
     schoolEnded = false
