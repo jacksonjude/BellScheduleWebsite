@@ -58,7 +58,7 @@ async function reloadTodayScheduleData()
     var endHour = parseInt(endTime.split(":")[0])
     var endMinute = parseInt(endTime.split(":")[1])
 
-    if (nowHour >= startHour && nowHour <= endHour && nowMinute >= startMinute && nowMinute < endMinute)
+    if ((nowHour > startHour || (nowHour == startHour && nowMinute >= startMinute)) && (nowHour < endHour || (nowHour == endHour && nowMinute < endMinute)))
     {
       currentPeriodNumber = i
       break
