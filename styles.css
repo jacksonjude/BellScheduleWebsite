@@ -54,14 +54,14 @@
 
   display: block;
 
-  background: url(assets/space.png);
+  background: url(assets/background.jpg);
   background-size: cover;
 
-  -webkit-filter: blur(5px);
-  -moz-filter: blur(5px);
-  -o-filter: blur(5px);
-  -ms-filter: blur(5px);
-  filter: blur(5px);
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
 
   min-width: 100%;
   min-height: 100%;
@@ -86,13 +86,12 @@ html {
   background-repeat: no-repeat;
   background-color: #444444;*/
 
-  background-color: #444444;
+  background-color: #AAA;
 }
 
 h1, h2, h3, h4, h5, h6, a:link, a:visited, a:active, p, label {
-  color: WHITE;
   font-family: '8bitoperator';
-  color: #D3D3D3;
+  color: #FFF;
 }
 
 input[type=submit] {
