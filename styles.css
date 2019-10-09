@@ -67,26 +67,13 @@
   min-height: 100%;
 }
 
-.background:before {
-  z-index: -1;
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(55,55,55, 0.25);
-  transition: all .3s linear;
-}
-
 html {
   /*background: url(assets/space.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-color: #444444;*/
 
-  background-color: #AAA;
+  background-color: #FFF;
 }
 
 h1, h2, h3, h4, h5, h6, a:link, a:visited, a:active, p, label {
