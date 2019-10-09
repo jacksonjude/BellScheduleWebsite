@@ -42,8 +42,8 @@ async function reloadTodayScheduleData()
   var periodTimes = todayScheduleData.periodTimes
   var periodNumbers = todayScheduleData.periodNumbers
 
-  var nowHour = (new Date()).getHour()
-  var nowMinute = (new Date()).getMinute()
+  var nowHour = (new Date()).getHours()
+  var nowMinute = (new Date()).getMinutes()
   var currentPeriodNumber
   var lastEndHour
   var lastEndMinute
