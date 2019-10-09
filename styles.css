@@ -164,11 +164,14 @@ tr:nth-child(even) {
   border:1px solid white;
   /*max-width: 200px;*/
   background-color: #444444;
-  padding-left:10px;
-  padding-right:10px;
+  padding:10px;
   border-radius: 5px;
 }
 
+.boxlabel {
+  margin-block-start: 5px;
+  margin-block-end: 5px;
+}
 
 .wingdings {
   position: fixed;
