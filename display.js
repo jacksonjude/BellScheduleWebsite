@@ -63,7 +63,7 @@ async function reloadTodayScheduleData()
       currentPeriodNumber = i
       break
     }
-    else if (lastEndHour <= nowHour && lastEndMinute <= nowMinute && startHour >= nowHour && startMinute > nowMinute)
+    else if ((lastEndHour < nowHour || (lastEndHour == nowHour && lastEndMinute <= nowMinute)) && (startHour > nowHour || (startHour == nowHour && startMinute > nowMinute)))
     {
       isPassingPeriod = true
       currentPeriodNumber = i
@@ -99,14 +99,14 @@ async function reloadTodayScheduleData()
     var schoolEndHour = parseInt(periodTimes[periodTimes.length-1].split("-")[1].split(":")[0])
     var schoolEndMinute = parseInt(periodTimes[periodTimes.length-1].split("-")[1].split(":")[1])
 
-    if (nowHour <= schoolStartHour && nowMinute < schoolStartMinute)
+    if (nowHour < schoolStartHour || (nowHour == schoolStartHour && nowMinute < schoolStartMinute))
     {
       $("#blockNumber").text("School has not started yet")
 
       schoolStarted = false
       schoolEnded = false
     }
-    else if (nowHour >= schoolStartHour && nowMinute >= schoolStartMinute)
+    else if (nowHour > schoolEndHour || (nowHour == schoolEndHour && nowMinute >= schoolEndMinute))
     {
       $("#blockNumber").text("School has ended")
 
