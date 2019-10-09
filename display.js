@@ -94,10 +94,10 @@ async function reloadTodayScheduleData()
   }
   else
   {
-    var schoolStartHour = parseInt(periodTimes[0].split("-")[0])
-    var schoolStartMinute = parseInt(periodTimes[0].split("-")[1])
-    var schoolEndHour = parseInt(periodTimes[1].split("-")[0])
-    var schoolEndMinute = parseInt(periodTimes[1].split("-")[1])
+    var schoolStartHour = parseInt(periodTimes[0].split("-")[0].split(":")[0])
+    var schoolStartMinute = parseInt(periodTimes[0].split("-")[0].split(":")[1])
+    var schoolEndHour = parseInt(periodTimes[periodTimes.length-1].split("-")[1].split(":")[0])
+    var schoolEndMinute = parseInt(periodTimes[periodTimes.length-1].split("-")[1].split(":")[1])
 
     if (nowHour <= schoolStartHour && nowMinute < schoolStartMinute)
     {
