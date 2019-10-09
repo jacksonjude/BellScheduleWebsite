@@ -157,6 +157,7 @@ tr:nth-child(even) {
   display: inline-block;
   padding-left: 20px;
   vertical-align: top;
+  border-radius: 5px;
 }
 
 .box {
@@ -165,6 +166,7 @@ tr:nth-child(even) {
   background-color: #444444;
   padding-left:10px;
   padding-right:10px;
+  border-radius: 5px;
 }
 
 
