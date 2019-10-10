@@ -87,7 +87,8 @@ async function reloadTodayScheduleData()
   }
   else if (isPassingPeriod)
   {
-    $("#blockNumber").text("Passing period\nBlock " + periodNumbers[currentPeriodNumber] + " starts at " + periodTimes[currentPeriodNumber].split("-")[0])
+    $("#blockNumber").text("Passing period")
+    $("#blockTime").text("Block " + periodNumbers[currentPeriodNumber] + " starts at " + periodTimes[currentPeriodNumber].split("-")[0])
 
     schoolStarted = true
     schoolEnded = false
