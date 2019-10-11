@@ -84,7 +84,7 @@ async function reloadTodayScheduleData()
     var periodEndTime = periodTimes[currentPeriodNumber].split("-")[1]
     var periodEndHour = parseInt(periodEndTime.split(":")[0])
     var periodEndMinute = parseInt(periodEndTime.split(":")[1])
-    $("#blockTime").text(convertTimeTo12Hour(periodTimes[currentPeriodNumber]) + " (" + ((periodEndHour-nowHour)*60+(periodEndMinute-nowMinute)) + " mins left)")
+    $("#blockTime").text(convertRangeTo12Hour(periodTimes[currentPeriodNumber]) + " (" + ((periodEndHour-nowHour)*60+(periodEndMinute-nowMinute)) + " mins left)")
 
     schoolStarted = true
     schoolEnded = false
@@ -137,7 +137,7 @@ async function reloadTomorrowScheduleData()
 
   if (tomorrowScheduleData.error != undefined) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
 
-  $("#tomorrowDate").text("School starts on " + tomorrowDate.getMonth() + "/" + tomorrowDate.getDate())
+  $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()+1))
   $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
 }
 
