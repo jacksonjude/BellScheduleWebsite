@@ -58,7 +58,7 @@ async function reloadTodayScheduleData()
     var endHour = parseInt(endTime.split(":")[0])
     var endMinute = parseInt(endTime.split(":")[1])
 
-    if (nowHour >= startHour && nowHour <= endHour && nowMinute >= startMinute && nowMinute < endMinute)
+    if ((nowHour > startHour || (nowHour == startHour && nowMinute >= startMinute)) && (nowHour < endHour || (nowHour == endHour && nowMinute < endMinute)))
     {
       currentPeriodNumber = i
       break
@@ -80,7 +80,11 @@ async function reloadTodayScheduleData()
   if (currentPeriodNumber != undefined && !isPassingPeriod)
   {
     $("#blockNumber").text("The current period is " + periodNumbers[currentPeriodNumber])
-    $("#blockTime").text(periodTimes[currentPeriodNumber])
+
+    var periodEndTime = periodTimes[currentPeriodNumber].split("-")[1]
+    var periodEndHour = parseInt(periodEndTime.split(":")[0])
+    var periodEndMinute = parseInt(periodEndTime.split(":")[1])
+    $("#blockTime").text(convertTimeTo12Hour(periodTimes[currentPeriodNumber]) + " (" + ((periodEndHour-nowHour)*60+(periodEndMinute-nowMinute)) + " mins left)")
 
     schoolStarted = true
     schoolEnded = false
@@ -116,8 +120,14 @@ async function reloadTodayScheduleData()
     }
   }
 
-  $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + periodTimes[0].split("-")[0])
-  $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + periodTimes[periodTimes.length-1].split("-")[1])
+  $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + convertTimeTo12Hour(periodTimes[0].split("-")[0]))
+  $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + convertTimeTo12Hour(periodTimes[periodTimes.length-1].split("-")[1]))
+
+  for (var i=0; i < periodTimes.length; i++)
+  {
+    $("#periodTimes").append("Period " + (i+1) + " - " +  convertRangeTo12Hour(periodTimes[i]))
+    if (i != periodTimes.length-1) { $("#periodTimes").append("<br>") }
+  }
 }
 
 async function reloadTomorrowScheduleData()
@@ -128,5 +138,28 @@ async function reloadTomorrowScheduleData()
   if (tomorrowScheduleData.error != undefined) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
 
   $("#tomorrowDate").text("School starts on " + tomorrowDate.getMonth() + "/" + tomorrowDate.getDate())
-  $("#tomorrowStart").text("at " + tomorrowScheduleData.periodTimes[0].split("-")[0])
+  $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
+}
+
+function convertRangeTo12Hour(range)
+{
+  var rangeStart = convertTimeTo12Hour(range.split("-")[0])
+  var rangeEnd = convertTimeTo12Hour(range.split("-")[1])
+
+  return rangeStart + "-" + rangeEnd
+}
+
+function convertTimeTo12Hour(time)
+{
+  var rangeStartHour = convertTo12Hour(parseInt(time.split(":")[0]))
+  var rangeStartMinute = time.split(":")[1]
+
+  return rangeStartHour + ":" + rangeStartMinute
+}
+
+function convertTo12Hour(hour)
+{
+  if (hour > 12) { return hour-12 }
+  if (hour == 0) { return 12 }
+  return hour
 }
