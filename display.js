@@ -129,7 +129,7 @@ async function reloadTodayScheduleData()
 
   for (var i=0; i < periodTimes.length; i++)
   {
-    $("#periodTimes").append("Period " + (i+1) + " - " +  convertRangeTo12Hour(periodTimes[i]))
+    $("#periodTimes").append("Period " + periodNumbers[i] + " - " +  convertRangeTo12Hour(periodTimes[i]))
     if (i != periodTimes.length-1) { $("#periodTimes").append("<br>") }
   }
 }
