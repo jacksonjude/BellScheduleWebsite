@@ -41,6 +41,7 @@ async function reloadTodayScheduleData()
 
   var periodTimes = todayScheduleData.periodTimes
   var periodNumbers = todayScheduleData.periodNumbers
+  var scheduleCode = todayScheduleData.scheduleCode
 
   var nowHour = (new Date()).getHours()
   var nowMinute = (new Date()).getMinutes()
@@ -122,6 +123,9 @@ async function reloadTodayScheduleData()
 
   $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + convertTimeTo12Hour(periodTimes[0].split("-")[0]))
   $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + convertTimeTo12Hour(periodTimes[periodTimes.length-1].split("-")[1]))
+
+  $("#periodTimes").append("Today's Schedule - " + scheduleCode)
+  $("#periodTimes").append("<br><br>")
 
   for (var i=0; i < periodTimes.length; i++)
   {
