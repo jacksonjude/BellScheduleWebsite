@@ -124,6 +124,7 @@ async function reloadTodayScheduleData()
   $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + convertTimeTo12Hour(periodTimes[0].split("-")[0]))
   $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + convertTimeTo12Hour(periodTimes[periodTimes.length-1].split("-")[1]))
 
+  $("#periodTimes").text("")
   $("#periodTimes").append("Today's Schedule - " + scheduleCode)
   $("#periodTimes").append("<br><br>")
 
@@ -132,6 +133,8 @@ async function reloadTodayScheduleData()
     $("#periodTimes").append("Period " + periodNumbers[i] + " - " +  convertRangeTo12Hour(periodTimes[i]))
     if (i != periodTimes.length-1) { $("#periodTimes").append("<br>") }
   }
+
+  setTimeout(function(){ reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
 
 async function reloadTomorrowScheduleData()
