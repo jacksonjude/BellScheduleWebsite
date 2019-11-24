@@ -32,12 +32,33 @@ function reloadScheduleData()
   reloadTomorrowScheduleData()
 }
 
+var tomorrowPeriodTimes
+var tomorrowPeriodNumbers
+var displayTomorrowPeriodTimes = false
+
 async function reloadTodayScheduleData()
 {
   var todayScheduleData = await getJSON(todayHost, {})
 
   if (todayScheduleData.error != undefined) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
-  if (todayScheduleData.message != undefined) { $("#blockNumber").text(todayScheduleData.message); return }
+  if (todayScheduleData.message != undefined)
+  {
+    $("#blockNumber").text(todayScheduleData.message)
+    $("#todayStart").text(todayScheduleData.message)
+
+    if (tomorrowPeriodTimes != null && tomorrowPeriodNumbers != null)
+    {
+      $("#periodTimes").text("")
+      $("#periodTimes").append("Tomorrow's Schedule - " + scheduleCode)
+      $("#periodTimes").append("<br><br>")
+    }
+    else
+    {
+      displayTomorrowPeriodTimes = true
+    }
+
+    return
+  }
   if (todayScheduleData.scheduleCode == "H") { $("#blockNumber").text("No school today"); return }
 
   var periodTimes = todayScheduleData.periodTimes
@@ -129,13 +150,18 @@ async function reloadTodayScheduleData()
   $("#periodTimes").append("Today's Schedule - " + scheduleCode)
   $("#periodTimes").append("<br><br>")
 
+  displayPeriodTimes(periodTimes, periodNumbers)
+
+  setTimeout(function(){ reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
+}
+
+function displayPeriodTimes(periodTimes, periodNumbers)
+{
   for (var i=0; i < periodTimes.length; i++)
   {
     $("#periodTimes").append("Period " + periodNumbers[i] + " - " +  convertRangeTo12Hour(periodTimes[i]))
     if (i != periodTimes.length-1) { $("#periodTimes").append("<br>") }
   }
-
-  setTimeout(function(){ reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
 
 async function reloadTomorrowScheduleData()
@@ -147,6 +173,18 @@ async function reloadTomorrowScheduleData()
 
   $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()+1))
   $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
+
+  tomorrowPeriodTimes = tomorrowScheduleData.periodTimes
+  tomorrowPeriodNumbers = tomorrowScheduleData.periodNumbers
+
+  if (displayTomorrowPeriodTimes)
+  {
+    $("#periodTimes").text("")
+    $("#periodTimes").append("Tomorrow's Schedule - " + scheduleCode)
+    $("#periodTimes").append("<br><br>")
+
+    displayPeriodTimes(tomorrowPeriodTimes, tomorrowPeriodNumbers)
+  }
 }
 
 function convertRangeTo12Hour(range)
