@@ -171,7 +171,7 @@ async function reloadTomorrowScheduleData()
 
   if (tomorrowScheduleData.error != undefined) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
 
-  $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()+1))
+  $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()))
   $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
 
   tomorrowPeriodTimes = tomorrowScheduleData.periodTimes
