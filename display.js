@@ -180,7 +180,7 @@ async function reloadTomorrowScheduleData()
   if (displayTomorrowPeriodTimes)
   {
     $("#periodTimes").text("")
-    $("#periodTimes").append("Tomorrow's Schedule - " + scheduleCode)
+    $("#periodTimes").append("Tomorrow's Schedule - " + tomorrowScheduleData.scheduleCode)
     $("#periodTimes").append("<br><br>")
 
     displayPeriodTimes(tomorrowPeriodTimes, tomorrowPeriodNumbers)
