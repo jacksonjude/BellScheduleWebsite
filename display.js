@@ -37,6 +37,7 @@ async function reloadTodayScheduleData()
   var todayScheduleData = await getJSON(todayHost, {})
 
   if (todayScheduleData.error != undefined) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
+  if (todayScheduleData.message != undefined) { $("#blockNumber").text(todayScheduleData.message); return }
   if (todayScheduleData.scheduleCode == "H") { $("#blockNumber").text("No school today"); return }
 
   var periodTimes = todayScheduleData.periodTimes
