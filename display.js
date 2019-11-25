@@ -49,7 +49,7 @@ async function reloadTodayScheduleData()
     if (tomorrowPeriodTimes != null && tomorrowPeriodNumbers != null)
     {
       $("#periodTimes").text("")
-      $("#periodTimes").append("Tomorrow's Schedule - " + scheduleCode)
+      $("#periodTimes").append("Next School Day Schedule - " + scheduleCode)
       $("#periodTimes").append("<br><br>")
     }
     else
@@ -180,7 +180,7 @@ async function reloadTomorrowScheduleData()
   if (displayTomorrowPeriodTimes)
   {
     $("#periodTimes").text("")
-    $("#periodTimes").append("Tomorrow's Schedule - " + tomorrowScheduleData.scheduleCode)
+    $("#periodTimes").append("Next School Day Schedule - " + tomorrowScheduleData.scheduleCode)
     $("#periodTimes").append("<br><br>")
 
     displayPeriodTimes(tomorrowPeriodTimes, tomorrowPeriodNumbers)
