@@ -28,29 +28,29 @@ $(function()
 
 function reloadScheduleData()
 {
+  tomorrowScheduleData = null
+  displayTomorrowPeriodTimes = false
+  
   reloadTodayScheduleData()
   reloadTomorrowScheduleData()
 }
 
-var tomorrowPeriodTimes
-var tomorrowPeriodNumbers
+var tomorrowScheduleData
 var displayTomorrowPeriodTimes = false
 
 async function reloadTodayScheduleData()
 {
   var todayScheduleData = await getJSON(todayHost, {})
 
-  if (todayScheduleData.error != undefined) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
-  if (todayScheduleData.message != undefined || todayScheduleData.scheduleCode == "H")
+  if (todayScheduleData.error != null) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
+  if (todayScheduleData.message != null || todayScheduleData.scheduleCode == "H")
   {
     $("#blockNumber").text(todayScheduleData.message ? todayScheduleData.message : "No school today")
     $("#todayStart").text(todayScheduleData.message ? todayScheduleData.message : "No school today")
 
-    if (tomorrowPeriodTimes != null && tomorrowPeriodNumbers != null)
+    if (tomorrowScheduleData != null)
     {
-      $("#periodTimes").text("")
-      $("#periodTimes").append("Next School Day Schedule - " + scheduleCode)
-      $("#periodTimes").append("<br><br>")
+      displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode)
     }
     else
     {
@@ -99,7 +99,7 @@ async function reloadTodayScheduleData()
   var schoolStarted
   var schoolEnded
 
-  if (currentPeriodNumber != undefined && !isPassingPeriod)
+  if (currentPeriodNumber != null && !isPassingPeriod)
   {
     $("#blockNumber").text("The current period is " + periodNumbers[currentPeriodNumber])
 
@@ -145,17 +145,17 @@ async function reloadTodayScheduleData()
   $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + convertTimeTo12Hour(periodTimes[0].split("-")[0]))
   $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + convertTimeTo12Hour(periodTimes[periodTimes.length-1].split("-")[1]))
 
-  $("#periodTimes").text("")
-  $("#periodTimes").append("Today's Schedule - " + scheduleCode)
-  $("#periodTimes").append("<br><br>")
-
   displayPeriodTimes(periodTimes, periodNumbers)
 
   setTimeout(function(){ reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
 
-function displayPeriodTimes(periodTimes, periodNumbers)
+function displayPeriodTimes(periodTimes, periodNumbers, scheduleCode)
 {
+  $("#periodTimes").text("")
+  $("#periodTimes").append((displayTomorrowPeriodTimes ? "Next School Day's Schedule" : "Today's Schedule") + "- " + scheduleCode)
+  $("#periodTimes").append("<br><br>")
+
   for (var i=0; i < periodTimes.length; i++)
   {
     $("#periodTimes").append("Period " + periodNumbers[i] + " - " +  convertRangeTo12Hour(periodTimes[i]))
@@ -168,21 +168,16 @@ async function reloadTomorrowScheduleData()
   var tomorrowScheduleData = await getJSON(tomorrowHost, {})
   var tomorrowDate = new Date(tomorrowScheduleData.date)
 
-  if (tomorrowScheduleData.error != undefined) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
+  if (tomorrowScheduleData.error != null) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
 
   $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()))
   $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
 
-  tomorrowPeriodTimes = tomorrowScheduleData.periodTimes
-  tomorrowPeriodNumbers = tomorrowScheduleData.periodNumbers
+  this.tomorrowScheduleData = tomorrowScheduleData
 
   if (displayTomorrowPeriodTimes)
   {
-    $("#periodTimes").text("")
-    $("#periodTimes").append("Next School Day Schedule - " + tomorrowScheduleData.scheduleCode)
-    $("#periodTimes").append("<br><br>")
-
-    displayPeriodTimes(tomorrowPeriodTimes, tomorrowPeriodNumbers)
+    displayPeriodTimes(tomorrowPeriodTimes, tomorrowPeriodNumbers, tomorrowScheduleData.scheduleCode)
   }
 }
 
