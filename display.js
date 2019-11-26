@@ -194,7 +194,7 @@ function convertTimeTo12Hour(time)
   var rangeStartHour = convertTo12Hour(parseInt(time.split(":")[0]))
   var rangeStartMinute = time.split(":")[1]
 
-  return zeroPadding(rangeStartHour) + ":" + zeroPadding(rangeStartMinute)
+  return zeroPadding(rangeStartHour) + ":" + rangeStartMinute
 }
 
 function convertTo12Hour(hour)
