@@ -50,7 +50,10 @@ async function reloadTodayScheduleData()
 
     if (tomorrowScheduleData != null)
     {
-      displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode)
+      var tomorrowDate = new Date(tomorrowScheduleData.date)
+      var tomorrowMonthDay = (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate())
+      
+      displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode, tomorrowMonthDay)
     }
     else
     {
@@ -150,10 +153,10 @@ async function reloadTodayScheduleData()
   setTimeout(function(){ tomorrowScheduleData = null; displayTomorrowPeriodTimes = false; reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
 
-function displayPeriodTimes(periodTimes, periodNumbers, scheduleCode)
+function displayPeriodTimes(periodTimes, periodNumbers, scheduleCode, scheduleDate)
 {
   $("#periodTimes").text("")
-  $("#periodTimes").append((displayTomorrowPeriodTimes ? "Next School Day's Schedule" : "Today's Schedule") + " - " + scheduleCode)
+  $("#periodTimes").append((displayTomorrowPeriodTimes ? (scheduleDate + " Schedule") : "Today's Schedule") + " - " + scheduleCode)
   $("#periodTimes").append("<br><br>")
 
   for (var i=0; i < periodTimes.length; i++)
@@ -170,14 +173,16 @@ async function reloadTomorrowScheduleData()
 
   if (tomorrowScheduleData.error != null) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
 
-  $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()))
+  var tomorrowMonthDay = (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate())
+
+  $("#tomorrowDate").text("School starts on " + tomorrowMonthDay)
   $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
 
   this.tomorrowScheduleData = tomorrowScheduleData
 
   if (displayTomorrowPeriodTimes)
   {
-    displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode)
+    displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode, tomorrowMonthDay)
   }
 }
 
