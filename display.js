@@ -177,7 +177,7 @@ async function reloadTomorrowScheduleData()
 
   if (displayTomorrowPeriodTimes)
   {
-    displayPeriodTimes(tomorrowScheduleData.tomorrowPeriodTimes, tomorrowScheduleData.tomorrowPeriodNumbers, tomorrowScheduleData.scheduleCode)
+    displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode)
   }
 }
 
