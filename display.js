@@ -52,7 +52,7 @@ async function reloadTodayScheduleData()
     {
       var tomorrowDate = new Date(tomorrowScheduleData.date)
       var tomorrowMonthDay = (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate())
-      
+
       displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode, tomorrowMonthDay)
     }
     else
@@ -196,10 +196,10 @@ function convertRangeTo12Hour(range)
 
 function convertTimeTo12Hour(time)
 {
-  var rangeStartHour = convertTo12Hour(parseInt(time.split(":")[0]))
-  var rangeStartMinute = time.split(":")[1]
+  var hour = convertTo12Hour(parseInt(time.split(":")[0]))
+  var minute = time.split(":")[1]
 
-  return zeroPadding(rangeStartHour) + ":" + rangeStartMinute
+  return zeroPadding(hour) + ":" + minute
 }
 
 function convertTo12Hour(hour)
