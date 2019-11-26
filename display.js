@@ -147,13 +147,13 @@ async function reloadTodayScheduleData()
 
   displayPeriodTimes(periodTimes, periodNumbers)
 
-  setTimeout(function(){ reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
+  setTimeout(function(){ tomorrowScheduleData = null; displayTomorrowPeriodTimes = false; reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
 
 function displayPeriodTimes(periodTimes, periodNumbers, scheduleCode)
 {
   $("#periodTimes").text("")
-  $("#periodTimes").append((displayTomorrowPeriodTimes ? "Next School Day's Schedule" : "Today's Schedule") + "- " + scheduleCode)
+  $("#periodTimes").append((displayTomorrowPeriodTimes ? "Next School Day's Schedule" : "Today's Schedule") + " - " + scheduleCode)
   $("#periodTimes").append("<br><br>")
 
   for (var i=0; i < periodTimes.length; i++)
