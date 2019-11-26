@@ -30,7 +30,7 @@ function reloadScheduleData()
 {
   tomorrowScheduleData = null
   displayTomorrowPeriodTimes = false
-  
+
   reloadTodayScheduleData()
   reloadTomorrowScheduleData()
 }
@@ -177,7 +177,7 @@ async function reloadTomorrowScheduleData()
 
   if (displayTomorrowPeriodTimes)
   {
-    displayPeriodTimes(tomorrowPeriodTimes, tomorrowPeriodNumbers, tomorrowScheduleData.scheduleCode)
+    displayPeriodTimes(tomorrowScheduleData.tomorrowPeriodTimes, tomorrowScheduleData.tomorrowPeriodNumbers, tomorrowScheduleData.scheduleCode)
   }
 }
 
