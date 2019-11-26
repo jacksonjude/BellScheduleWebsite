@@ -41,10 +41,10 @@ async function reloadTodayScheduleData()
   var todayScheduleData = await getJSON(todayHost, {})
 
   if (todayScheduleData.error != undefined) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
-  if (todayScheduleData.message != undefined)
+  if (todayScheduleData.message != undefined || todayScheduleData.scheduleCode == "H")
   {
-    $("#blockNumber").text(todayScheduleData.message)
-    $("#todayStart").text(todayScheduleData.message)
+    $("#blockNumber").text(todayScheduleData.message ? todayScheduleData.message : "No school today")
+    $("#todayStart").text(todayScheduleData.message ? todayScheduleData.message : "No school today")
 
     if (tomorrowPeriodTimes != null && tomorrowPeriodNumbers != null)
     {
@@ -59,7 +59,6 @@ async function reloadTodayScheduleData()
 
     return
   }
-  if (todayScheduleData.scheduleCode == "H") { $("#blockNumber").text("No school today"); return }
 
   var periodTimes = todayScheduleData.periodTimes
   var periodNumbers = todayScheduleData.periodNumbers
