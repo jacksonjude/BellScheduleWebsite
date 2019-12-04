@@ -148,7 +148,7 @@ async function reloadTodayScheduleData()
   $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + convertTimeTo12Hour(periodTimes[0].split("-")[0]))
   $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + convertTimeTo12Hour(periodTimes[periodTimes.length-1].split("-")[1]))
 
-  displayPeriodTimes(periodTimes, periodNumbers)
+  displayPeriodTimes(periodTimes, periodNumbers, scheduleCode)
 
   setTimeout(function(){ tomorrowScheduleData = null; displayTomorrowPeriodTimes = false; reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
