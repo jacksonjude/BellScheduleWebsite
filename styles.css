@@ -92,7 +92,7 @@ button {
 }
 
 a:hover {
-  color: #F3F3F3;
+  color: #DDD;
 }
 
 .clickerButtons
@@ -226,6 +226,6 @@ tr:nth-child(even) {
 .outline {
   color: BLACK;
   -webkit-text-fill-color: WHITE;
-  -webkit-text-stroke-width: 0.3pt;
+  -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: black;
 }
