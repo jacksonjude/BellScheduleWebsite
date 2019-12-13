@@ -28,16 +28,40 @@ $(function()
 
 function reloadScheduleData()
 {
+  tomorrowScheduleData = null
+  displayTomorrowPeriodTimes = false
+
   reloadTodayScheduleData()
   reloadTomorrowScheduleData()
 }
+
+var tomorrowScheduleData
+var displayTomorrowPeriodTimes = false
 
 async function reloadTodayScheduleData()
 {
   var todayScheduleData = await getJSON(todayHost, {})
 
-  if (todayScheduleData.error != undefined) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
-  if (todayScheduleData.scheduleCode == "H") { $("#blockNumber").text("No school today"); return }
+  if (todayScheduleData.error != null) { $("#blockNumber").text("Error: " + todayScheduleData.error); return }
+  if (todayScheduleData.message != null || todayScheduleData.scheduleCode == "H")
+  {
+    $("#blockNumber").text(todayScheduleData.message ? todayScheduleData.message : "No school today")
+    $("#todayStart").text(todayScheduleData.message ? todayScheduleData.message : "No school today")
+
+    if (tomorrowScheduleData != null)
+    {
+      var tomorrowDate = new Date(tomorrowScheduleData.date)
+      var tomorrowMonthDay = (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate())
+
+      displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode, tomorrowMonthDay)
+    }
+    else
+    {
+      displayTomorrowPeriodTimes = true
+    }
+
+    return
+  }
 
   var periodTimes = todayScheduleData.periodTimes
   var periodNumbers = todayScheduleData.periodNumbers
@@ -78,7 +102,7 @@ async function reloadTodayScheduleData()
   var schoolStarted
   var schoolEnded
 
-  if (currentPeriodNumber != undefined && !isPassingPeriod)
+  if (currentPeriodNumber != null && !isPassingPeriod)
   {
     $("#blockNumber").text("The current period is " + periodNumbers[currentPeriodNumber])
 
@@ -124,8 +148,15 @@ async function reloadTodayScheduleData()
   $("#todayStart").text("School " + (schoolStarted ? " started " : " will start ") + " today at " + convertTimeTo12Hour(periodTimes[0].split("-")[0]))
   $("#todayEnd").text("School " + (schoolEnded ? " ended " : " will end ") + " today at " + convertTimeTo12Hour(periodTimes[periodTimes.length-1].split("-")[1]))
 
+  displayPeriodTimes(periodTimes, periodNumbers, scheduleCode)
+
+  setTimeout(function(){ tomorrowScheduleData = null; displayTomorrowPeriodTimes = false; reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
+}
+
+function displayPeriodTimes(periodTimes, periodNumbers, scheduleCode, scheduleDate)
+{
   $("#periodTimes").text("")
-  $("#periodTimes").append("Today's Schedule - " + scheduleCode)
+  $("#periodTimes").append((displayTomorrowPeriodTimes ? (scheduleDate + " Schedule") : "Today's Schedule") + " - " + scheduleCode)
   $("#periodTimes").append("<br><br>")
 
   for (var i=0; i < periodTimes.length; i++)
@@ -133,8 +164,6 @@ async function reloadTodayScheduleData()
     $("#periodTimes").append("Period " + periodNumbers[i] + " - " +  convertRangeTo12Hour(periodTimes[i]))
     if (i != periodTimes.length-1) { $("#periodTimes").append("<br>") }
   }
-
-  setTimeout(function(){ reloadTodayScheduleData() }, 1000*(60-(new Date()).getSeconds()))
 }
 
 async function reloadTomorrowScheduleData()
@@ -142,10 +171,19 @@ async function reloadTomorrowScheduleData()
   var tomorrowScheduleData = await getJSON(tomorrowHost, {})
   var tomorrowDate = new Date(tomorrowScheduleData.date)
 
-  if (tomorrowScheduleData.error != undefined) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
+  if (tomorrowScheduleData.error != null) { $("#tomorrowDate").text("Error: " + tomorrowScheduleData.error); return }
 
-  $("#tomorrowDate").text("School starts on " + (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate()+1))
+  var tomorrowMonthDay = (tomorrowDate.getMonth()+1) + "/" + (tomorrowDate.getDate())
+
+  $("#tomorrowDate").text("School starts on " + tomorrowMonthDay)
   $("#tomorrowStart").text("at " + convertTimeTo12Hour(tomorrowScheduleData.periodTimes[0].split("-")[0]))
+
+  this.tomorrowScheduleData = tomorrowScheduleData
+
+  if (displayTomorrowPeriodTimes)
+  {
+    displayPeriodTimes(tomorrowScheduleData.periodTimes, tomorrowScheduleData.periodNumbers, tomorrowScheduleData.scheduleCode, tomorrowMonthDay)
+  }
 }
 
 function convertRangeTo12Hour(range)
@@ -158,10 +196,10 @@ function convertRangeTo12Hour(range)
 
 function convertTimeTo12Hour(time)
 {
-  var rangeStartHour = convertTo12Hour(parseInt(time.split(":")[0]))
-  var rangeStartMinute = time.split(":")[1]
+  var hour = convertTo12Hour(parseInt(time.split(":")[0]))
+  var minute = time.split(":")[1]
 
-  return rangeStartHour + ":" + rangeStartMinute
+  return zeroPadding(hour) + ":" + minute
 }
 
 function convertTo12Hour(hour)
@@ -169,4 +207,10 @@ function convertTo12Hour(hour)
   if (hour > 12) { return hour-12 }
   if (hour == 0) { return 12 }
   return hour
+}
+
+function zeroPadding(n)
+{
+  if (parseInt(n) < 10) { return "0" + n }
+  return n
 }
