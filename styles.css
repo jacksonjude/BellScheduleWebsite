@@ -79,7 +79,7 @@ html {
 
 h1, h2, h3, h4, h5, h6, a:link, a:visited, a:active, p, label {
   font-family: '8bitoperator';
-  font-size: 22px;
+  font-size: 24px;
   color: #FFF;
 }
 
@@ -165,8 +165,7 @@ tr:nth-child(even) {
 }
 
 .boxlabel {
-  margin-block-start: 5px;
-  margin-block-end: 5px;
+  margin: 5px;
 }
 
 .wingdings {
