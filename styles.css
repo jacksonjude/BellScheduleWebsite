@@ -1,7 +1,7 @@
 @font-face {
     font-family: '8bitoperator';
-    src: url('http://jacksonjude.com/assets/8bitoperator-jve.woff2') format('woff2'),
-        url('http://jacksonjude.com/assets/8bitoperator-jve.woff') format('woff');
+    src: url('https://jacksonjude.com/assets/8bitoperator-jve.woff2') format('woff2'),
+        url('https://jacksonjude.com/assets/8bitoperator-jve.woff') format('woff');
 }
 
 .blur {
