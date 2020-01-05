@@ -1,6 +1,10 @@
 @font-face {
     font-family: '8bitoperator';
+<<<<<<< HEAD
     src: url("https://jacksonjude.com/assets/8bitoperator_jve.ttf");
+=======
+    src: url("jacksonjude.com/assets/8bitoperator_jve.ttf");
+>>>>>>> 2c083c384bde9e9b3e69638a6eebb5eac621a5d0
 }
 
 .blur {
