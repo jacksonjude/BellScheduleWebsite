@@ -134,9 +134,8 @@ button:disabled
 }
 
 table {
-    font-family: 'BreeSerif';
-    border-collapse: collapse;
-    width: 100%;
+  border-collapse: collapse;
+  width: 100%;
 }
 
 td, th {
@@ -176,6 +175,7 @@ tr:nth-child(even) {
 
 .boxlabel {
   margin: 5px;
+  font-size: 130%
 }
 
 .wingdings {
@@ -245,6 +245,6 @@ tr:nth-child(even) {
 .outline {
   color: BLACK;
   -webkit-text-fill-color: WHITE;
-  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: black;
 }
