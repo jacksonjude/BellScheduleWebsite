@@ -1,12 +1,17 @@
 @font-face {
-    font-family: '8bitoperator-jve';
-    src: url('https://jacksonjude.com/assets/8bitoperator-jve.woff2') format('woff2'),
-        url('https://jacksonjude.com/assets/8bitoperator-jve.woff') format('woff');
+  font-family: '8bitoperator-jve';
+  src: url('https://jacksonjude.com/assets/8bitoperator-jve.woff2') format('woff2'),
+      url('https://jacksonjude.com/assets/8bitoperator-jve.woff') format('woff');
 }
 
 @font-face {
-    font-family: '8bitoperator';
-    src: url('https://jacksonjude.com/assets/8bitoperator.ttf');
+  font-family: '8bitoperator';
+  src: url('https://jacksonjude.com/assets/8bitoperator.ttf');
+}
+
+@font-face {
+  font-family: 'BreeSerif';
+  src: url('https://jacksonjude.com/assets/BreeSerif-Regular.ttf');
 }
 
 .blur {
@@ -83,19 +88,19 @@ html {
 }
 
 h1, h2, h3, h4, h5, h6, a:link, a:visited, a:active, p, label {
-  font-family: '8bitoperator';
+  font-family: 'BreeSerif';
   /*font-size: 24px;*/
   color: #FFF;
 }
 
 input[type=submit] {
   background-color: #fefefe;
-  font-family: '8bitoperator';
+  font-family: 'BreeSerif';
 }
 
 button {
   background-color: #fefefe;
-  font-family: '8bitoperator';
+  font-family: 'BreeSerif';
 }
 
 a {
@@ -129,7 +134,7 @@ button:disabled
 }
 
 table {
-    font-family: '8bitoperator';
+    font-family: 'BreeSerif';
     border-collapse: collapse;
     width: 100%;
 }
